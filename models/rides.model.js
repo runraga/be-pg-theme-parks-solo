@@ -13,3 +13,10 @@ exports.fetchRide = (ride_id) => {
       return rows[0];
     });
 };
+exports.deleteRideFromDb = (ride_id) => {
+  return db.query(
+    `DELETE FROM rides
+  WHERE ride_id = $1`,
+    [ride_id]
+  );
+};

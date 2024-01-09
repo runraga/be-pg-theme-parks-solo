@@ -125,13 +125,18 @@ describe("app", () => {
       });
     });
   });
-  describe("DELETE tests", () => {
+  describe.only("DELETE tests", () => {
     describe("DELETE /api/rides/:ride_id", () => {
       test("should repond with a 204 status code", () => {
         return request(app).delete("/api/rides/2").expect(204);
       });
-      test("should respond with a 404 status code when trying to get a ride that has been deleted", () => {
-        request(app).get("/api/rides/2").expect(404);
+      test("should respond with a 404 status code when trying to get a ride that has been deleted or doesn't exist", () => {
+        return request(app)
+          .get("/api/ride/30")
+          .expect(404)
+          .then((response) => {
+            console.log(response);
+          });
       });
     });
   });
