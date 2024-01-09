@@ -12,13 +12,13 @@ afterAll(() => {
 });
 
 describe("app", () => {
-  describe("GET tests", () => {
-    describe("GET /api/healthcheck", () => {
+  describe("GET", () => {
+    describe("/api/healthcheck", () => {
       test("should respond with a 200 status code", () => {
         return request(app).get("/api/healthcheck").expect(200);
       });
     });
-    describe("GET /api/parks", () => {
+    describe("/api/parks", () => {
       test("should respond with a 200 status code", () => {
         return request(app).get("/api/parks").expect(200);
       });
@@ -36,7 +36,7 @@ describe("app", () => {
           });
       });
     });
-    describe("GET /api/ride/:ride_id", () => {
+    describe("/api/ride/:ride_id", () => {
       test("should respond with a 200 status code", () => {
         return request(app).get("/api/ride/1").expect(200);
       });
@@ -54,10 +54,26 @@ describe("app", () => {
           });
       });
     });
+    describe("/api/parks/:park_id", () => {
+      test("should response with 200 status code and the corrent park object", () => {
+        return request(app)
+          .get("/api/parks/1")
+          .expect(200)
+          .then(({ body }) => {
+            const { park } = body;
+            expect(typeof park.park_id).toBe("number");
+            expect(typeof park.park_name).toBe("string");
+            expect(typeof park.year_opened).toBe("number");
+            expect(typeof park.annual_attendance).toBe("number");
+            expect(typeof park.average_votes).toBe("number");
+            expect(typeof park.ride_count).toBe("number");
+          });
+      });
+    });
   });
 
-  describe("POST tests", () => {
-    describe("POST /api/parks/:park_id/rides", () => {
+  describe("POST", () => {
+    describe("/api/parks/:park_id/rides", () => {
       test("should respond with a 201 status code and newRide", () => {
         const newRide = {
           ride_name: "new ride",
@@ -103,8 +119,8 @@ describe("app", () => {
     });
   });
 
-  describe("PATCH tests", () => {
-    describe("PATCH /api/rides/:ride_id", () => {
+  describe("PATCH", () => {
+    describe("/api/rides/:ride_id", () => {
       test("should respond with a 200 status code and updated ride data", () => {
         const newData = { ride_name: "new ride name" };
         return request(app)
@@ -125,8 +141,8 @@ describe("app", () => {
       });
     });
   });
-  describe.only("DELETE tests", () => {
-    describe("DELETE /api/rides/:ride_id", () => {
+  describe("DELETE", () => {
+    describe("/api/rides/:ride_id", () => {
       test("should repond with a 204 status code", () => {
         return request(app).delete("/api/rides/2").expect(204);
       });
