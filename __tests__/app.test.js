@@ -149,7 +149,7 @@ describe("app", () => {
       test("should respond with a 404 status code when trying to get a ride that has been deleted or doesn't exist", () => {
         return request(app)
           .get("/api/ride/30")
-          .expect(404)
+          .expect(400)
           .then((response) => {
             console.log(response);
           });

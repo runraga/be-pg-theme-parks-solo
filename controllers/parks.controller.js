@@ -8,7 +8,6 @@ exports.getParks = (request, response) => {
 exports.getPark = (request, response) => {
   const { park_id } = request.params;
   fetchParkInfo(park_id).then((park) => {
-    console.log(park, "<<<<");
     response.status(200).send({ park });
   });
 };

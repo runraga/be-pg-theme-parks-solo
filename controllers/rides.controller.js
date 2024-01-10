@@ -4,7 +4,7 @@ exports.getSingleRide = (request, response) => {
   const { ride_id } = request.params;
   fetchRide(ride_id).then((ride) => {
     if (ride === undefined) {
-      response.status(404).send();
+      response.status(400).send();
     } else {
       response.status(200).send({ ride });
     }
